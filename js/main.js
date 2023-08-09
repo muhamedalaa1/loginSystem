@@ -17,6 +17,17 @@ function getRegister() {
 
     allAccounts.push(accounts);
     localStorage.setItem("theUsers", JSON.stringify(allAccounts));
+
+
+    document.getElementById("alert-name").classList.replace("d-block", "d-none");
+    document.getElementById("alert-email").classList.replace("d-block", "d-none");
+    document.getElementById("alert-password").classList.replace("d-block", "d-none");
+    signUpNameInput.classList.remove("is-invalid");
+    signUpEmailInput.classList.remove("is-invalid");
+    signUpPasswordInput.classList.remove("is-invalid");
+    signUpNameInput.classList.add("is-valid");
+    signUpEmailInput.classList.add("is-valid");
+    signUpPasswordInput.classList.add("is-valid");
     clearInputs();
   }
 }
@@ -33,47 +44,33 @@ function validation() {
   var regexPassword = /(?=.{8,})/;
 
   if (
-    regexName.test(signUpNameInput.value) == false ||
-    signUpNameInput.value == ""
-  ) {
+    regexName.test(signUpNameInput.value) == false || signUpNameInput.value == "") {
+
     signUpNameInput.classList.add("is-invalid");
-    document
-      .getElementById("alert-name")
-      .classList.replace("d-none", "d-block");
+    document.getElementById("alert-name").classList.replace("d-none", "d-block");
     return false;
-  } else if (
-    regexEmail.test(signUpEmailInput.value) == false ||
-    signUpEmailInput.value == ""
-  ) {
+
+
+  } else if (regexEmail.test(signUpEmailInput.value) == false || signUpEmailInput.value == "") {  
+
     signUpNameInput.classList.remove("is-invalid");
-    document
-      .getElementById("alert-name")
-      .classList.replace("d-block", "d-none");
+    document.getElementById("alert-name").classList.replace("d-block", "d-none");
     signUpEmailInput.classList.add("is-invalid");
-    document
-      .getElementById("alert-email")
-      .classList.replace("d-none", "d-block");
+    document.getElementById("alert-email").classList.replace("d-none", "d-block");
     return false;
-  } else if (
-    regexPassword.test(signUpPasswordInput.value) == false ||
-    signUpPasswordInput.value == ""
-  ) {
+
+  } else if (regexPassword.test(signUpPasswordInput.value) == false ||signUpPasswordInput.value == "") {
+
+
     signUpEmailInput.classList.remove("is-invalid");
-    document
-      .getElementById("alert-email")
-      .classList.replace("d-block", "d-none");
+    document.getElementById("alert-email").classList.replace("d-block", "d-none");
     signUpPasswordInput.classList.add("is-invalid");
-    document
-      .getElementById("alert-password")
-      .classList.replace("d-none", "d-block");
+    document.getElementById("alert-password").classList.replace("d-none", "d-block");
     return false;
+
   } else {
-    document
-      .getElementById("success-msg")
-      .classList.replace("d-none", "d-block");
-    document
-      .getElementById("alert-password")
-      .classList.replace("d-block", "d-none");
+    document.getElementById("success-msg").classList.replace("d-none", "d-block");
+    document.getElementById("alert-password").classList.replace("d-block", "d-none");
 
     signUpPasswordInput.classList.remove("is-invalid");
     signUpNameInput.classList.add("is-valid");
@@ -84,29 +81,33 @@ function validation() {
 }
 
 function isExist() {
+  var flag = true;
   for (var i = 0; i < allAccounts.length; i++) {
-    if (
-      signUpEmailInput.value.toLowerCase() == allAccounts[i].email.toLowerCase()
-    ) {
-      document
-        .getElementById("existMsg")
-        .classList.replace("d-none", "d-block");
+    if (signUpEmailInput.value.toLowerCase() == allAccounts[i].email.toLowerCase()) {
+      flag = false;
+    } 
+    }
+    if(flag == true){
+      document.getElementById("existMsg").classList.replace("d-block", "d-none");
+      signUpEmailInput.classList.remove("is-invalid");
+      signUpEmailInput.classList.add("is-valid");
+
+      return false
+    }
+    else{
+      document.getElementById("existMsg").classList.replace("d-none", "d-block");
+      signUpEmailInput.classList.remove("is-valid")
+      signUpEmailInput.classList.add("is-invalid")
       return true;
-    } else {
-      document
-        .getElementById("existMsg")
-        .classList.replace("d-block", "d-none");
-      return false;
     }
   }
-}
 
 //=================    start login   =====================================
 //=================    start login   =====================================
 
 
 
-var userNameLocal = localStorage.getItem("userName")
+var userNameLocal = localStorage.getItem("userName");
 function getLogin() {
 
   var logInEmailInput = document.getElementById("logInput-one");
@@ -120,9 +121,6 @@ function getLogin() {
       document.getElementById("loginBtn").setAttribute("href", "home.html");
       localStorage.setItem("userName", allAccounts[i].name);
 
-      
-
-
     } else {
       document.getElementById("loginErrorMsg").classList.replace("d-none", "d-block");
     }
@@ -135,7 +133,7 @@ function getLogin() {
 
 function getDisplayHome(){
 
-  document.getElementById("welcomeMsg").innerHTML = "welcome" + userNameLocal;
+  document.getElementById("welcomeMsg").innerHTML = "welcome " + userNameLocal;
 
 }
 
